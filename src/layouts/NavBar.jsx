@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
 import { ShoppingCartIcon } from "@heroicons/react/solid";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "./RootLayout";
 
 export function NavBar() {
-  const { isCartSelected, toggleCart } = useContext(CartContext);
+  const { toggleCart, cartList } = useContext(CartContext);
+  const [cartItemCount, setCartItemCount] = useState(0);
+
+  useEffect(() => {
+    //Update cart item count when cartList changes
+    setCartItemCount(cartList.length);
+  }, [cartList]);
   return (
     <>
       <header className=' w-full bg-gray-800 flex text-white p-8 items-center'>
@@ -22,10 +28,17 @@ export function NavBar() {
             <Link to='/shop'>Shop</Link>
           </li>
           <li>
-            <ShoppingCartIcon
-              onClick={toggleCart}
-              className='h-12 w-12 bg-gray-500 p-3 rounded-full cursor-pointer '
-            />
+            <div className='relative'>
+              <ShoppingCartIcon
+                onClick={toggleCart}
+                className='h-12 w-12 bg-gray-500 p-3 rounded-full cursor-pointer '
+              />
+              {cartItemCount > 0 && (
+                <div className='absolute -bottom-2 -left-2 bg-red-500 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs'>
+                  {cartItemCount}
+                </div>
+              )}
+            </div>
           </li>
         </ul>
       </header>

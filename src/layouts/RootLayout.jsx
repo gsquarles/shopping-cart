@@ -8,13 +8,20 @@ export const CartContext = createContext();
 
 export function RootLayout() {
   const [isCartSelected, setIsCartSelected] = useState(false);
+  const [cartList, setCartList] = useState([]);
 
   function toggleCart() {
     setIsCartSelected((c) => !c);
   }
   return (
     <CartContext.Provider
-      value={{ isCartSelected, setIsCartSelected, toggleCart }}
+      value={{
+        isCartSelected,
+        setIsCartSelected,
+        toggleCart,
+        cartList,
+        setCartList,
+      }}
     >
       <NavBar />
       <Outlet />

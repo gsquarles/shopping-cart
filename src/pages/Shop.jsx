@@ -1,12 +1,20 @@
 import { useLoaderData } from "react-router-dom";
 import { ItemCard } from "../components/ItemCard";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../layouts/RootLayout";
 import { ShoppingCart } from "../components/ShoppingCart";
 
 export function Shop() {
   const items = useLoaderData();
-  const { isCartSelected, toggleCart } = useContext(CartContext);
+  const { isCartSelected, toggleCart, setCartList } = useContext(CartContext);
+
+  const addToCart = (itemId) => {
+    const item = items.find((item) => item.id === itemId);
+    if (item) {
+      const updatedItem = { ...item, quantity: 1 };
+      setCartList((prevCartList) => [...prevCartList, updatedItem]);
+    }
+  };
 
   return (
     <>
@@ -19,6 +27,7 @@ export function Shop() {
             description={item.description}
             title={item.title}
             price={item.price}
+            addToCart={addToCart}
           />
         ))}
       </main>
