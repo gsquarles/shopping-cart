@@ -5,12 +5,12 @@ import react from "@vitejs/plugin-react-swc";
 export default defineConfig({
   base: "./",
   plugins: [react()],
-  server: {
-    middleware: (app) => {
-      app.use((req, res, next) => {
-        res.setHeader("Set-Cookie", "SameSite=None; Secure");
-        next();
-      });
-    },
-  },
+  // server: {
+  //   middleware: (app) => {
+  //     app.use((req, res, next) => {
+  //       res.setHeader("Set-Cookie", "SameSite=None; Secure");
+  //       next();
+  //     });
+  //   },
+  // },
 });
